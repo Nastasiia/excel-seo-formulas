@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Excel Formula Reference</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,600;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f2eb;--sur:#fff;--sur2:#faf8f4;--bor:#e8e2d9;--tx:#1c1a16;--mu:#8a8278;--ac:#2d5a27;--acl:#e8f0e7;--mono:'DM Mono',monospace;--serif:'Fraunces',serif;--sans:'DM Sans',sans-serif;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--tx);font-family:var(--sans);font-weight:300;line-height:1.6;}
+header{background:var(--tx);color:#fff;padding:36px 40px 28px;position:relative;overflow:hidden;}
+header::before{content:'=';font-family:var(--mono);font-size:200px;position:absolute;right:-10px;top:-40px;opacity:.05;line-height:1;}
+.htop{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px;}
+h1{font-family:var(--serif);font-weight:300;font-size:36px;letter-spacing:-1px;line-height:1.1;}
+h1 em{font-style:italic;color:#a8c5a0;}
+header p{margin-top:8px;color:#9a9690;font-size:14px;}
+.lt{display:flex;background:rgba(255,255,255,.1);border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,.15);}
+.lb{padding:8px 16px;font-family:var(--sans);font-size:13px;font-weight:500;color:rgba(255,255,255,.5);border:none;background:none;cursor:pointer;transition:all .2s;}
+.lb.on{background:rgba(255,255,255,.15);color:#fff;}
+.sw{margin-top:18px;position:relative;max-width:440px;}
+.sw input{width:100%;padding:10px 16px 10px 38px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:8px;color:#fff;font-family:var(--sans);font-size:14px;outline:none;}
+.sw input::placeholder{color:rgba(255,255,255,.3);}
+.sw input:focus{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.3);}
+.si{position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:14px;opacity:.5;}
+.sr{display:none;position:absolute;top:calc(100% + 6px);left:0;right:0;background:var(--sur);border:1px solid var(--bor);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.12);z-index:300;max-height:300px;overflow-y:auto;}
+.sr.on{display:block;}
+.sri{padding:11px 15px;cursor:pointer;border-bottom:1px solid var(--bor);transition:background .15s;}
+.sri:last-child{border-bottom:none;}
+.sri:hover{background:var(--bg);}
+.srn{font-family:var(--mono);font-size:13px;font-weight:500;}
+.src{font-size:11px;color:var(--mu);margin-top:2px;}
+.se{padding:16px;text-align:center;color:var(--mu);font-size:13px;}
+nav{background:var(--sur);border-bottom:1px solid var(--bor);padding:0 40px;display:flex;overflow-x:auto;position:sticky;top:0;z-index:100;scrollbar-width:none;}
+nav::-webkit-scrollbar{display:none;}
+.nb{padding:14px 16px;font-family:var(--sans);font-size:13px;font-weight:500;color:var(--mu);border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;display:flex;align-items:center;gap:6px;}
+.nb:hover{color:var(--tx);}
+.nb.on{color:var(--tx);border-bottom-color:var(--tx);}
+.nd{width:7px;height:7px;border-radius:50%;display:inline-block;}
+main{max-width:1100px;margin:0 auto;padding:32px 40px;}
+.sec{display:none;}.sec.on{display:block;}
+.sh{display:flex;align-items:baseline;gap:14px;margin-bottom:22px;}
+.st{font-family:var(--serif);font-size:26px;font-weight:300;font-style:italic;}
+.sc{font-size:12px;color:var(--mu);font-family:var(--mono);}
+.grid{display:grid;gap:13px;}
+.card{background:var(--sur);border:1px solid var(--bor);border-radius:10px;overflow:hidden;transition:box-shadow .2s;}
+.card:hover{box-shadow:0 4px 20px rgba(0,0,0,.07);}
+.card.hid{display:none;}
+.ch{padding:15px 20px 13px;display:flex;align-items:flex-start;justify-content:space-between;gap:16px;cursor:pointer;user-select:none;border-left:3px solid var(--c,#ccc);}
+.chl{flex:1;}
+.fn{font-family:var(--mono);font-size:15px;font-weight:500;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.fb{font-size:10px;font-family:var(--sans);font-weight:500;padding:2px 8px;border-radius:20px;letter-spacing:.5px;text-transform:uppercase;background:var(--cl,#eee);color:var(--c,#666);}
+.ft{font-size:13px;color:var(--mu);margin-top:3px;font-weight:300;}
+.ti{color:var(--mu);font-size:18px;transition:transform .25s;flex-shrink:0;margin-top:2px;}
+.card.op .ti{transform:rotate(45deg);}
+.cb{display:none;border-top:1px solid var(--bor);background:var(--sur2);}
+.card.op .cb{display:block;}
+.cbi{padding:16px 20px 18px;display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+@media(max-width:640px){.cbi{grid-template-columns:1fr;}}
+.il{font-size:10px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:var(--mu);margin-bottom:6px;}
+.it{font-size:13px;line-height:1.65;}
+.sb{grid-column:1/-1;}
+.code{font-family:var(--mono);font-size:12px;background:var(--tx);color:#a8c5a0;padding:12px 15px;border-radius:6px;overflow-x:auto;white-space:pre;line-height:1.75;}
+.ix{background:var(--sur);border:1px solid var(--bor);border-radius:8px;margin:0 20px 18px;overflow:hidden;}
+.ixh{padding:9px 15px;background:var(--tx);color:#a8c5a0;font-size:11px;font-family:var(--mono);}
+.ixb{padding:14px 16px;}
+.irow{display:flex;gap:9px;align-items:flex-end;flex-wrap:wrap;margin-bottom:11px;}
+.ig{display:flex;flex-direction:column;gap:4px;}
+.ig label{font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--mu);font-weight:500;}
+.ig input,.ig select{font-family:var(--mono);font-size:13px;padding:7px 10px;border:1px solid var(--bor);border-radius:6px;background:var(--bg);color:var(--tx);outline:none;min-width:100px;}
+.ig input:focus,.ig select:focus{border-color:var(--ac);}
+.btn{padding:7px 16px;background:var(--tx);color:#fff;border:none;border-radius:6px;font-family:var(--sans);font-size:13px;font-weight:500;cursor:pointer;}
+.btn:hover{opacity:.82;}
+.res{background:var(--acl);border:1px solid #c5d9c3;border-radius:6px;padding:10px 14px;display:none;}
+.res.on{display:block;}
+.rl{font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--ac);font-weight:500;margin-bottom:3px;}
+.rv{font-family:var(--mono);font-size:15px;}
+.rf{font-family:var(--mono);font-size:11px;color:var(--mu);margin-top:3px;}
+.cm{--c:#2d5a27;--cl:#e8f0e7;} .ct{--c:#c17f3a;--cl:#fdf3e7;}
+.cl{--c:#1a4a7a;--cl:#eaf0f8;} .cd{--c:#c0392b;--cl:#fdf0ee;}
+.clo{--c:#5a3a7a;--cl:#f2eef8;} .cs{--c:#1a6a6a;--cl:#eaf4f4;}
+.cseo{--c:#8B4513;--cl:#fdf0e6;} .cto{--c:#4a4a4a;--cl:#f0f0f0;}
+.tg{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;}
+.tip{background:var(--sur);border:1px solid var(--bor);border-radius:10px;overflow:hidden;}
+.tph{padding:16px 18px;cursor:pointer;display:flex;justify-content:space-between;align-items:flex-start;}
+.tpi{flex:1;}
+.tic{font-size:22px;margin-bottom:7px;}
+.tit{font-family:var(--mono);font-size:14px;font-weight:500;}
+.tid{font-size:13px;color:var(--mu);line-height:1.6;margin-top:5px;}
+.tpb{display:none;border-top:1px solid var(--bor);}
+.tip.op .tpb{display:block;}
+.tip.op .ti{transform:rotate(45deg);}
+.dw{padding:14px;}
+.de{background:#fff;border:1px solid #ddd;border-radius:6px;overflow:hidden;font-family:var(--mono);font-size:11px;}
+.dtb{background:#217346;padding:5px 10px;}
+.dtb span{color:rgba(255,255,255,.7);font-size:10px;}
+.dr{display:flex;border-bottom:1px solid #e8e8e8;}
+.dc{padding:4px 8px;font-size:11px;border-right:1px solid #e8e8e8;min-width:90px;color:#333;white-space:nowrap;}
+.dc.hd{background:#f5f5f5;color:#888;font-weight:600;text-align:center;min-width:36px;}
+.dc.grn{color:#217346;font-weight:600;}
+.dsteps{border-top:1px solid var(--bor);}
+.ds{padding:9px 14px;display:flex;gap:9px;align-items:flex-start;opacity:.35;transition:all .4s;border-left:3px solid transparent;}
+.ds.on{opacity:1;border-left-color:var(--ac);background:var(--acl);}
+.dn{font-family:var(--mono);font-size:11px;font-weight:500;color:var(--ac);flex-shrink:0;margin-top:1px;}
+.dt{font-size:12px;line-height:1.5;}
+.dt code{font-family:var(--mono);font-size:11px;background:rgba(0,0,0,.06);padding:1px 5px;border-radius:3px;}
+.pb{display:flex;align-items:center;gap:7px;padding:8px 14px;background:var(--tx);color:#fff;border:none;border-radius:6px;font-size:12px;font-family:var(--sans);cursor:pointer;margin:10px 14px 14px;}
+.pb:hover{opacity:.85;}
+@keyframes fu{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:translateY(0)}}
+.ds.on{animation:fu .3s ease;}
+.de-t{display:none;}.en-t{display:inline;}
+#app.de .de-t{display:inline;}#app.de .en-t{display:none;}
+.de-b{display:none;}.en-b{display:block;}
+#app.de .de-b{display:block;}#app.de .en-b{display:none;}
+.nr{text-align:center;padding:48px;color:var(--mu);font-family:var(--serif);font-style:italic;font-size:20px;}
+</style>
+</head>
+<body><div id="app">
+<header>
+  <div class="htop">
+    <div>
+      <h1>Excel Formula <em>Reference</em></h1>
+      <p class="en-b">Interactive guide · 35+ formulas · Built for everyday use</p>
+      <p class="de-b">Interaktiver Leitfaden · 35+ Formeln · Für den täglichen Einsatz</p>
+    </div>
+    <div class="lt">
+      <button class="lb on" onclick="setLang('en')">EN</button>
+      <button class="lb" onclick="setLang('de')">DE</button>
+    </div>
+  </div>
+  <div class="sw">
+    <span class="si">🔍</span>
+    <input id="srch" type="text" placeholder="Search formulas… / Formeln suchen…" oninput="doSearch(this.value)" onfocus="openS()" onblur="setTimeout(closeS,200)">
+    <div class="sr" id="sres"></div>
+  </div>
+</header>
+<nav>
+  <button class="nb on" onclick="go('math',this)"><span class="nd" style="background:#2d5a27"></span><span class="en-t">Math</span><span class="de-t">Mathematik</span></button>
+  <button class="nb" onclick="go('text',this)"><span class="nd" style="background:#c17f3a"></span>Text</button>
+  <button class="nb" onclick="go('lookup',this)"><span class="nd" style="background:#1a4a7a"></span>Lookup</button>
+  <button class="nb" onclick="go('date',this)"><span class="nd" style="background:#c0392b"></span><span class="en-t">Date</span><span class="de-t">Datum</span></button>
+  <button class="nb" onclick="go('logical',this)"><span class="nd" style="background:#5a3a7a"></span><span class="en-t">Logical</span><span class="de-t">Logisch</span></button>
+  <button class="nb" onclick="go('statistical',this)"><span class="nd" style="background:#1a6a6a"></span><span class="en-t">Statistical</span><span class="de-t">Statistik</span></button>
+  <button class="nb" onclick="go('seo',this)"><span class="nd" style="background:#8B4513"></span>SEO</button>
+  <button class="nb" onclick="go('tools',this)"><span class="nd" style="background:#4a4a4a"></span>Tools &amp; Tips</button>
+</nav>
+<main>
+
+<!-- MATH -->
+<div class="sec on" id="sec-math">
+  <div class="sh"><h2 class="st"><span class="en-t">Math Formulas</span><span class="de-t">Mathematik-Formeln</span></h2><span class="sc">4 formulas</span></div>
+  <div class="grid">
+    <div class="card cm" data-kw="sum summe add numbers math" onclick="tog(this)">
+      <div class="ch"><div class="chl"><div class="fn">SUM <span class="fb">Math</span></div><div class="ft"><span class="en-t">Add up a range of numbers</span><span class="de-t">Zahlen in einem Bereich summieren</span></div></div><span class="ti">+</span></div>
+      <div class="cb"><div class="cbi">
+        <div class="sb"><div class="il">Syntax</div><div class="code">=SUM(A1:A10)
+=SUM(A1:A10, C1:C10)  → multiple ranges / mehrere Bereiche</div></div>
+        <div><div class="il"><span class="en-t">What it does</span><span class="de-t">Was es macht</span></div><div class="it"><span class="en-t">Adds all numbers in a range. Ignores text and empty cells automatically.</span><span class="de-t">Addiert alle Zahlen. Ignoriert Text und leere Zellen automatisch.</span></div></div>
+        <div><div class="il">Pro tip</div><div class="it"><span class="en-t"><b>Alt + =</b> auto-inserts SUM for selected range.</span><span class="de-t"><b>Alt + =</b> fügt SUM automatisch für den ausgewählten Bereich ein.</span></div></div>
+      </div>
+      <div class="ix"><div class="ixh">// Try it — SUM</div><div class="ixb">
+        <div class="irow"><div class="ig"><label><span class="en-t">Numbers (comma separated)</span><span class="de-t">Zahlen (kommagetrennt)</span></label><input id="si" value="10, 25, 8, 42, 15" style="min-width:180px"></div><button class="btn" onclick="event.stopPropagation();cSum()">=SUM</button></div>
+        <div class="res" id="sr"><div class="rl">Result</div><div class="rv" id="sv"></div><div class="rf" id="sf"></div></div>
+      </div></div></div>
+    </div>
+    <div class="card cm" data-kw="round runden decimal math" onclick="tog(this)">
+      <div class="ch"><div class="chl"><div class="fn">ROUND <span class="fb">Math</span></div><div class="ft"><span class="en-t">Round to specified decimal places</span><span class="de-t">Auf Dezimalstellen runden</span></div></div><span class="ti">+</span></div>
+      <div class="cb"><div class="cbi">
+        <div class="sb"><div class="il">Syntax</div><div class="code">=ROUND(3.14159, 2)  → 3.14
+=ROUND(1234, -2)    → 1200
+=ROUNDUP(3.1, 0)    → 4  |  =ROUNDDOWN(3.9, 0) → 3</div></div>
+        <div><div class="il"><span class="en-t">What it does</span><span class="de-t">Was es macht</span></div><div class="it"><span class="en-t">Rounds to the digits you specify. Negative num_digits rounds to tens/hundreds.</span><span class="de-t">Rundet auf die angegebenen Stellen. Negative Werte runden auf Zehner/Hunderter.</span></div></div>
+        <div><div class="il"><span class="en-t">Variants</span><span class="de-t">Varianten</span></div><div class="it"><b>ROUNDUP</b> always up · <b>ROUNDDOWN</b> always down</div></div>
+      </div>
+      <div class="ix"><div class="ixh">// Try it — ROUND</div><div class="ixb">
+        <div class="irow"><div class="ig"><label>Number</label><input id="rn" type="number" value="3.14159"></div><div class="ig"><label>Digits</label><input id="rd" type="number" value="2" style="min-width:70px"></div><button class="btn" onclick="event.stopPropagation();cRound()">=ROUND</button></div>
+        <div class="res" id="rr"><div class="rl">Result</div><div class="rv" id="rv"></div><div class="rf" id="rf"></div></div>
+      </div></div></div>
+    </div>
+    <div class="card cm" data-kw="abs absolute value betrag math" onclick="tog(this)">
+      <div class="ch"><div class="chl"><div class="fn">ABS <span class="fb">Math</span></div><div class="ft"><span class="en-t">Absolute (positive) value</span><span class="de-t">Absoluter Wert</span></div></div><span class="ti">+</span></div>
+      <div class="cb"><div class="cbi">
+        <div class="sb"><div class="il">Syntax</div><div class="code">=ABS(-42)      → 42
+=ABS(A1-B1)    → difference regardless of order</div></div>
+        <div><div class="il"><span class="en-t">What it does</span><span class="de-t">Was es macht</span></div><div class="it"><span class="en-t">Removes the negative sign. Great for variance calculations.</span><span class="de-t">Entfernt das Minuszeichen. Ideal für Abweichungsberechnungen.</span></div></div>
+        <div><div class="il"><span class="en-t">Use case</span><span class="de-t">Anwendungsfall</span></div><div class="it"><code>=ABS(Actual-Budget)</code> — <span class="en-t">no negative signs in variance reports</span><span class="de-t">keine Minuszeichen in Abweichungsberichten</span></div></div>
+      </div></div>
+    </div>
+    <div class="card cm" data-kw="sumif sumifs conditional sum math bedingung" onclick="tog(this)">
+      <div class="ch"><div class="chl"><div class="fn">SUMIF / SUMIFS <span class="fb">Math</span></div><div class="ft"><span class="en-t">Sum cells that meet conditions</span><span class="de-t">Zellen mit Bedingungen summieren</span></div></div><span class="ti">+</span></div>
+      <div class="cb"><div class="cbi">
+        <div class="sb"><div class="il">Syntax</div><div class="code">=SUMIF(A:A, "Apple", B:B)
+=SUMIF(C:C, ">100", D:D)
+=SUMIFS(sum_range, range1, crit1, range2, crit2)</div></div>
+        <div><div class="il"><span class="en-t">What it does</span><span class="de-t">Was es macht</span></div><div class="it"><span class="en-t">Adds values based on conditions. SUMIFS for multiple conditions.</span><span class="de-t">Addiert Werte basierend auf Bedingungen. SUMMEWENNS für mehrere Bedingungen.</span></div></div>
+        <div><div class="il">Pro tip</div><div class="it"><span class="en-t">Wildcards work: <code>"*apple*"</code> matches anything containing "apple".</span><span class="de-t">Platzhalter: <code>"*apple*"</code> findet alles mit "apple".</span></div></div>
+      </div></div>
+    </div>
+  </div>
+</div>
+
+<!-- TEXT -->
+<div class="sec" id="sec-text">
+  <div class="sh"><h2 class="st"><span class="en-t">Text Formulas</span><span class="de-t">Text-Formeln</span></h2><span class="sc">9 formulas</span></div>
+  <div class="grid">
+    <div class="card ct" data-kw="concatenate join text verbinden ampersand" onclick="tog(this)">
+      <div class="ch"><div class="chl"><div class="fn">CONCATENATE / & <span class="fb">Text</span></div><div class="ft"><span class="en-t">Join text strings together</span><span class="de-t">Textzeichenfolgen zusammenfügen</span></div></div><span class="ti">+</span></div>
+      <div class="cb"><div class="cbi">
+        <div class="sb"><div class="il">Syntax</div><div class="code">=A1&" "&B1            → preferred / bevorzugt
+=CONCAT(A1:A5)        → join a range / Bereich verbinden
+="Hello "&A1&"!"</div></div>
+        <div><div class="il"><span class="en-t">What it does</span><span class="de-t">Was es macht</span></div><div class="it"><span class="en-t">Joins text from multiple cells. & is faster to type and does the same.</span><span class="de-t">Verbindet Text aus mehreren Zellen. & ist schneller und macht dasselbe.</span></div></div>
+        <div><div class="il">Pro tip</div><div class="it"><span class="en-t">For many cells with a separator, use TEXTJOIN instead — much cleaner.</span><span class="de-t">Für viele Zellen: TEXTVERKETTEN verwenden — viel sauberer.</span></div></div>
+      </div>
+      <div class="ix"><div class="ixh">// Try it — JOIN</div><div class="ixb">
+        <div class="irow"><div class="ig"><label>Text 1</label><input id="ca" value="Hello"></div><div class="ig"><label>Sep</label><input id="cs" value=" " style="min-width:50px"></div><div class="ig"><label>Text 2</label><input id="cb2" value="World"></div><button class="btn" onclick="event.stopPropagation();cConcat()">Join</button></div>
+        <div class="res" id="cr"><div class="rl">Result</div><div class="rv" id="cv"></div><div class="rf" id="cf"></div></div>
+      </div></div></div>
+    </div>
+    <div class="card ct" data-kw="left right mid extract text zeichen" onclick="tog(this)">
+      <div class="ch"><div class="chl"><div class="fn">LEFT / RIGHT / MID <span class="fb">Text</span></div><div class="ft"><span class="en-t">Extract characters from text</span><span class="de-t">Zeichen aus Text extrahieren</span></div></div><span class="ti">+</span></div>
+      <div class="cb"><div class="cbi">
+        <div class="sb"><div class="il">Syntax</div><div class="code">=LEFT("Excel2024", 5)    → "Excel"
+=RIGHT("Excel2024", 4)   → "2024"
+=MID("Excel2024", 6, 4)  → "2024"
+=LEFT(A1, LEN(A1)-3)     → remove last 3 chars</div></div>
+        <div><div class="il"><span class="en-t">What it does</span><span class="de-t">Was es macht</span></div><div class="it"><span class="en-t">Extracts characters from left, right, or middle. Great for codes and IDs.</span><span class="de-t">Extrahiert Zeichen von links, rechts oder aus der Mitte. Ideal für Codes und IDs.</span></div></div>
+        <div><div class="il">Pro tip</div><div class="it"><code>=LEFT(A1,FIND("@",A1)-1)</code> — <span class="en-t">extract username from email</span><span class="de-t">Benutzernamen aus E-Mail extrahieren</span></div></div>
+      </div>
+      <div class="ix"><div class="ixh">// Try it — LEFT / RIGHT</div><div class="ixb">
+        <div class="irow"><div class="ig"><label>Text</label><input id="lt" value="Excel2024"></div><div class="ig"><label>Dir</label><select id="ld"><option value="l">LEFT</option><option value="r">RIGHT</option></select></div><div class="ig"><label>Chars</label><input id="lc" type="number" value="5" style="min-width:60px"></div><button class="btn" onclick="event.stopPropagation();cLR()">Extract</button></div>
+        <div class="res" id="lr"><div class="rl">Result</div><div class="rv" id="lv"></div><div class="rf" id="lf"></div></div>
+      </div></div></div>
+    </div>
+    <div class="card ct" data-kw="len length count characters laenge zeichen" onclick="tog(this)">
+      <div class="ch"><div class="chl"><div class="fn">LEN <span class="fb">Text</span></div><div class="ft"><span class="en-t">Count characters in text</span><span class="de-t">Zeichen zählen</span></div></div><span class="ti">+</span></div>
+      <div class="cb"><div class="cbi">
+        <div class="sb"><div class="il">Syntax</div><div class="code">=LEN("Hello")          → 5
+=LEN(TRIM(A1))         → without extra spaces
+=IF(LEN(A1)>160,"Too long",IF(LEN(A1)&lt;70,"Too short","✓ OK"))</div></div>
+        <div><div class="il"><span class="en-t">What it does</span><span class="de-t">Was es macht</span></div><div class="it"><span class="en-t">Returns character count including spaces. Essential for data validation.</span><span class="de-t">Gibt Zeichenanzahl zurück. Unverzichtbar für Datenvalidierung.</span></div></div>
+        <div><div class="il">SEO tip</div><div class="it"><span class="en-t">Use to validate meta title (max 60) and description (max 160) lengths.</span><span class="de-t">Zur Validierung von Meta-Titel (max. 60) und Beschreibung (max. 160) verwenden.</span></div></div>
+      </div></div>
+    </div>
+    <div class="card ct" data-kw="trim clean spaces leerzeichen entfernen" onclick="tog(this)">
+      <div class="ch"><div class="chl"><div class="fn">TRIM <span class="fb">Text</span></div><div class="ft"><span class="en-t">Remove extra spaces</span><span class="de-t">Überflüssige Leerzeichen entfernen</span></div></div><span class="ti">+</span></div>
+      <div class="cb"><div class="cbi">
+        <div class="sb"><div class="il">Syntax</div><div class="code">=TRIM("  Hello World  ")  → "Hello World"
+=TRIM(CLEAN(A1))          → also removes non-printable characters</div></div>
+        <div><div class="il"><span class="en-t">What it does</span><span class="de-t">Was es macht</span></div><div class="it"><span class="en-t">Removes leading, trailing, and extra internal spaces. Essential for cleaning imported data.</span><span class="de-t">Entfernt führende, nachfolgende und überschüssige Leerzeichen. Unverzichtbar beim Bereinigen importierter Daten.</span></div></div>
+        <div><div class="il">Pro tip</div><div class="it"><span class="en-t">Always wrap XLOOKUP values in TRIM if data was imported — spaces cause #N/A errors.</span><span class="de-t">XLOOKUP-Werte immer mit GLÄTTEN umhüllen — Leerzeichen verursachen #NV-Fehler.</span></div></div>
+      </div></div>
+    </div>
+    <div class="card ct" data-kw="substitute replace ersetzen text" onclick="tog(this)">
+      <div class="ch"><div class="chl"><div class="fn">SUBSTITUTE <span class="fb">Text</span></div><div class="ft"><span class="en-t">Replace specific text within a string</span><span class="de-t">Bestimmten Text ersetzen</span></div></div><span class="ti">+</span></div>
+      <div class="cb"><div class="cbi">
+        <div class="sb"><div class="il">Syntax</div><div class="code">=SUBSTITUTE(text, old_text, new_text, [instance])
+=SUBSTITUTE(A1, "http://", "https://")
+=SUBSTITUTE(A1, " ", "-")      → spaces to hyphens (URL slugs)
+=SUBSTITUTE(A1, "Mär", "Mar")  → German month fix</div></div>
+        <div><div class="il"><span class="en-t">What it does</span><span class="de-t">Was es macht</span></div><div class="it"><span class="en-t">Replaces specific text inside a formula. Can be chained for multiple replacements.</span><span class="de-t">Ersetzt Text innerhalb einer Formel. Kann für mehrere Ersetzungen verkettet werden.</span></div></div>
+        <div><div class="il"><span class="en-t">Chain multiple</span><span class="de-t">Mehrfach verketten</span></div><div class="it"><code>=SUBSTITUTE(SUBSTITUTE(A1,"a","b"),"c","d")</code></div></div>
+      </div></div>
+    </div>
+    <div class="card ct" data-kw="textjoin join range delimiter verbinden" onclick="tog(this)">
+      <div class="ch"><div class="chl"><div class="fn">TEXTJOIN <span class="fb">Text</span></div><div class="ft"><span class="en-t">Join a range with a delimiter</span><span class="de-t">Bereich mit Trennzeichen verbinden</span></div></div><span class="ti">+</span></div>
+      <div class="cb"><div class="cbi">
+        <div class="sb"><div class="il">Syntax</div><div class="code">=TEXTJOIN(", ", TRUE, A1:A5)    → "Apple, Banana, Cherry"
+=TEXTJOIN(" | ", TRUE, A1:A10)  → custom separator / eigenes Trennzeichen</div></div>
+        <div><div class="il"><span class="en-t">What it does</span><span class="de-t">Was es macht</span></div><div class="it"><span class="en-t">Joins many cells with a separator. TRUE skips blank cells.</span><span class="de-t">Verbindet viele Zellen mit Trennzeichen. WAHR überspringt leere Zellen.</span></div></div>
+      </div></div>
+    </div>
+    <div class="card ct" data-kw="textsplit split text aufteilen" onclick="tog(this)">
+      <div class="ch"><div class="chl"><div class="fn">TEXTSPLIT <span class="fb">Text</span></div><div class="ft"><span class="en-t">Split text into separate cells</span><span class="de-t">Text in separate Zellen aufteilen</span></div></div><span class="ti">+</span></div>
+      <div class="cb"><div class="cbi">
+        <div class="sb"><div class="il">Syntax</div><div class="code">=TEXTSPLIT("a,b,c", ",")        → 3 columns
+=TEXTSPLIT(A1, {",",";"})       → multiple delimiters / mehrere Trennzeichen</div></div>
+        <div><div class="il"><span class="en-t">What it does</span><span class="de-t">Was es macht</span></div><div class="it"><span class="en-t">Splits a string into an array that spills across cells. Excel 365+ only.</span><span class="de-t">Teilt Text in ein Array auf. Nur Excel 365+.</span></div></div>
+        <div><div class="il"><span class="en-t">Older Excel?</span><span class="de-t">Älteres Excel?</span></div><div class="it"><span class="en-t">Use Data → Text to Columns instead.</span><span class="de-t">Stattdessen Daten → Text in Spalten verwenden.</span></div></div>
+      </div></div>
+    </div>
+    <div class="card ct" data-kw="textbefore textafter extract before after text" onclick="tog(this)">
+      <div class="ch"><div class="chl"><div class="fn">TEXTBEFORE / TEXTAFTER <span class="fb">Text</span></div><div class="ft"><span class="en-t">Extract text before or after a character</span><span class="de-t">Text vor oder nach einem Zeichen extrahieren</span></div></div><span class="ti">+</span></div>
+      <div class="cb"><div class="cbi">
+        <div class="sb"><div class="il">Syntax</div><div class="code">=TEXTBEFORE("John Smith", " ")   → "John"
+=TEXTAFTER("John Smith", " ")    → "Smith"
+=TEXTAFTER("a.b.c", ".", 2)      → "c" (after 2nd dot)
+
+Old way: =LEFT(A1,FIND(" ",A1)-1)
+New way: =TEXTBEFORE(A1," ")   ← much cleaner!</div></div>
+        <div><div class="il"><span class="en-t">What it does</span><span class="de-t">Was es macht</span></div><div class="it"><span class="en-t">Extracts the part of text before or after a specified character. Much simpler than LEFT+FIND.</span><span class="de-t">Extrahiert Text vor oder nach einem Zeichen. Viel einfacher als LINKS+FINDEN.</span></div></div>
+      </div></div>
+    </div>
+  </div>
+</div>
+
+<!-- LOOKUP -->
+<div class="sec" id="sec-lookup">
+  <div class="sh"><h2 class="st">Lookup Formulas</h2><span class="sc">5 formulas</span></div>
+  <div class="grid">
+    <div class="card cl" data-kw="vlookup lookup search find sverweis" onclick="tog(this)">
+      <div class="ch"><div class="chl"><div class="fn">VLOOKUP <span class="fb">Lookup</span></div><div class="ft"><span class="en-t">Look up a value and return from another column</span><span class="de-t">Wert suchen und aus anderer Spalte zurückgeben</span></div></div><span class="ti">+</span></div>
+      <div class="cb"><div class="cbi">
+        <div class="sb"><div class="il">Syntax</div><div class="code">=VLOOKUP(A2, $B:$D, 2, FALSE)  → always use FALSE for exact match
+⚠ Can only look RIGHT — use XLOOKUP or INDEX/MATCH for left
+⚠ col_index breaks if columns are inserted</div></div>
+        <div><div class="il"><span class="en-t">What it does</span><span class="de-t">Was es macht</span></div><div class="it"><span class="en-t">Searches for a value in the first column and returns a value from a specified column in the same row.</span><span class="de-t">Sucht einen Wert in der ersten Spalte und gibt einen Wert aus einer anderen Spalte zurück.</span></div></div>
+        <div><div class="il"><span class="en-t">Common mistakes</span><span class="de-t">Häufige Fehler</span></div><div class="it"><span class="en-t">1. Using TRUE (use FALSE)<br>2. Not locking: <code>$B$2:$D$100</code></span><span class="de-t">1. TRUE verwenden (FALSE verwenden)<br>2. Nicht sperren: <code>$B$2:$D$100</code></span></div></div>
+      </div></div>
+    </div>
+    <div class="card cl" data-kw="xlookup lookup modern search find" onclick="tog(this)">
+      <div class="ch"><div class="chl"><div class="fn">XLOOKUP <span class="fb">Lookup</span></div><div class="ft"><span class="en-t">Modern replacement for VLOOKUP — cleaner & more powerful</span><span class="de-t">Moderner SVERWEIS-Ersatz</span></div></div><span class="ti">+</span></div>
+      <div class="cb"><div class="cbi">
+        <div class="sb"><div class="il">Syntax</div><div class="code">=XLOOKUP(lookup, lookup_range, return_range, [if_not_found])
+=XLOOKUP(A2, B:B, C:C, "Not found")
+✓ Can look left, right, up or down
+✓ Handles missing values natively — no IFERROR needed
+✓ Does not break when columns are inserted</div></div>
+        <div><div class="il"><span class="en-t">vs VLOOKUP</span><span class="de-t">vs SVERWEIS</span></div><div class="it"><span class="en-t">No col_index needed — point directly to the return range. Use XLOOKUP over VLOOKUP whenever on Excel 365.</span><span class="de-t">Keine col_index-Nummer nötig. Bei Excel 365 immer XLOOKUP statt SVERWEIS verwenden.</span></div></div>
+      </div></div>
+    </div>
+    <div class="card cl" data-kw="index match lookup find vergleich" onclick="tog(this)">
+      <div class="ch"><div class="chl"><div class="fn">INDEX + MATCH <span class="fb">Lookup</span></div><div class="ft"><span class="en-t">Look in any direction — left or right</span><span class="de-t">In jede Richtung suchen</span></div></div><span class="ti">+</span></div>
+      <div class="cb"><div class="cbi">
+        <div class="sb"><div class="il">Syntax</div><div class="code">=INDEX(return_range, MATCH(lookup_value, lookup_range, 0))
+=INDEX(C:C, MATCH(A2, B:B, 0))
+→ Find A2 in column B, return from column C
+→ Can look LEFT — VLOOKUP cannot</div></div>
+        <div><div class="il">INDEX</div><div class="it"><span class="en-t">Returns value at a given position. "Give me the Nth item."</span><span class="de-t">Gibt Wert an einer bestimmten Position zurück.</span></div></div>
+        <div><div class="il">MATCH</div><div class="it"><span class="en-t">Finds the row number. Together: MATCH finds position, INDEX retrieves value.</span><span class="de-t">Findet die Zeilennummer. Zusammen: VERGLEICH findet Position, INDEX holt Wert.</span></div></div>
+      </div></div>
+    </div>
+    <div class="card cl" data-kw="indirect dynamic reference indirekt" onclick="tog(this)">
+      <div class="ch"><div class="chl"><div class="fn">INDIRECT <span class="fb">Lookup</span></div><div class="ft"><span class="en-t">Reference a cell dynamically using a text string</span><span class="de-t">Zelle dynamisch über Text referenzieren</span></div></div><span class="ti">+</span></div>
+      <div class="cb"><div class="cbi">
+        <div class="sb"><div class="il">Syntax</div><div class="code">=INDIRECT("A"&B1)           → if B1=5, returns value of A5
+=INDIRECT("'"&A1&"'!B2")    → reference another sheet dynamically
+=SUM(INDIRECT("A1:A"&C1))   → dynamic range in SUM</div></div>
+        <div><div class="il"><span class="en-t">What it does</span><span class="de-t">Was es macht</span></div><div class="it"><span class="en-t">Turns a text string into a real cell reference. Lets you build references dynamically — great for dashboards.</span><span class="de-t">Wandelt Text in einen echten Zellbezug um. Ideal für dynamische Dashboards.</span></div></div>
+        <div><div class="il"><span class="en-t">Common use</span><span class="de-t">Häufige Verwendung</span></div><div class="it"><span class="en-t">Dropdown with sheet name → shows data from that sheet automatically.</span><span class="de-t">Dropdown mit Blattname → zeigt automatisch Daten dieses Blatts.</span></div></div>
+      </div></div>
+    </div>
+    <div class="card cl" data-kw="offset shift range dynamic bereich verschieben" onclick="tog(this)">
+      <div class="ch"><div class="chl"><div class="fn">OFFSET <span class="fb">Lookup</span></div><div class="ft"><span class="en-t">Return a range shifted by rows and columns</span><span class="de-t">Bereich um Zeilen und Spalten verschoben</span></div></div><span class="ti">+</span></div>
+      <div class="cb"><div class="cbi">
+        <div class="sb"><div class="il">Syntax</div><div class="code">=OFFSET(reference, rows, cols, [height], [width])
+=OFFSET(A1, 2, 1)           → B3 (2 down, 1 right from A1)
+=SUM(OFFSET(A1,0,0,COUNTA(A:A),1))  → auto-expanding SUM</div></div>
+        <div><div class="il"><span class="en-t">What it does</span><span class="de-t">Was es macht</span></div><div class="it"><span class="en-t">Returns a reference shifted from a starting point. Can return a dynamic range — great for charts that grow automatically.</span><span class="de-t">Gibt einen verschobenen Bezug zurück. Kann einen dynamischen Bereich zurückgeben — ideal für automatisch wachsende Diagramme.</span></div></div>
+        <div><div class="il">vs INDIRECT</div><div class="it"><span class="en-t">INDIRECT builds from text. OFFSET shifts from a cell. Use OFFSET when you know how many rows/cols to move.</span><span class="de-t">INDIREKT baut aus Text. BEREICH.VERSCHIEBEN verschiebt von einer Zelle. Verwenden, wenn Zeilen-/Spaltenanzahl bekannt.</span></div></div>
+      </div></div>
+    </div>
+  </div>
+</div>
+
+<!-- DATE -->
+<div class="sec" id="sec-date">
+  <div class="sh"><h2 class="st"><span class="en-t">Date Formulas</span><span class="de-t">Datum-Formeln</span></h2><span class="sc">3 formulas</span></div>
+  <div class="grid">
+    <div class="card cd" data-kw="today now date datum heute jetzt" onclick="tog(this)">
+      <div class="ch"><div class="chl"><div class="fn">TODAY / NOW <span class="fb">Date</span></div><div class="ft"><span class="en-t">Current date or date and time</span><span class="de-t">Aktuelles Datum oder Datum und Uhrzeit</span></div></div><span class="ti">+</span></div>
+      <div class="cb"><div class="cbi">
+        <div class="sb"><div class="il">Syntax</div><div class="code">=TODAY()     → current date (updates daily)
+=NOW()       → date + time
+=TODAY()-30  → 30 days ago  |  =TODAY()+7 → one week from now
+=YEAR(TODAY()) → current year as number</div></div>
+        <div><div class="il"><span class="en-t">What it does</span><span class="de-t">Was es macht</span></div><div class="it"><span class="en-t">Both update on recalculation. Use Ctrl+; to insert a static (frozen) date instead.</span><span class="de-t">Beide aktualisieren sich bei jeder Berechnung. Strg+; für ein statisches Datum verwenden.</span></div></div>
+      </div></div>
+    </div>
+    <div class="card cd" data-kw="datedif date difference days months years differenz tage monate" onclick="tog(this)">
+      <div class="ch"><div class="chl"><div class="fn">DATEDIF <span class="fb">Date</span></div><div class="ft"><span class="en-t">Difference between two dates</span><span class="de-t">Differenz zwischen zwei Datumsangaben</span></div></div><span class="ti">+</span></div>
+      <div class="cb"><div class="cbi">
+        <div class="sb"><div class="il">Syntax</div><div class="code">=DATEDIF(start_date, end_date, unit)
+"D"=days | "M"=months | "Y"=years
+=DATEDIF(A1, TODAY(), "D")  → days since date in A1</div></div>
+        <div><div class="il"><span class="en-t">Note</span><span class="de-t">Hinweis</span></div><div class="it"><span class="en-t">Hidden/undocumented function — won't appear in autocomplete but works perfectly.</span><span class="de-t">Versteckte Funktion — erscheint nicht in der Autovervollständigung, funktioniert aber einwandfrei.</span></div></div>
+        <div><div class="il"><span class="en-t">Common use</span><span class="de-t">Häufige Verwendung</span></div><div class="it">Days overdue: <code>=DATEDIF(due,TODAY(),"D")</code></div></div>
+      </div>
+      <div class="ix"><div class="ixh">// Try it — days between dates</div><div class="ixb">
+        <div class="irow"><div class="ig"><label>Start</label><input id="ds" type="date"></div><div class="ig"><label>End</label><input id="de2" type="date"></div><button class="btn" onclick="event.stopPropagation();cDate()">Calculate</button></div>
+        <div class="res" id="dr"><div class="rl">Result</div><div class="rv" id="dv"></div><div class="rf" id="df"></div></div>
+      </div></div></div>
+    </div>
+    <div class="card cd" data-kw="day month year date extract tag monat jahr" onclick="tog(this)">
+      <div class="ch"><div class="chl"><div class="fn">DAY / MONTH / YEAR <span class="fb">Date</span></div><div class="ft"><span class="en-t">Extract parts from a date</span><span class="de-t">Teile eines Datums extrahieren</span></div></div><span class="ti">+</span></div>
+      <div class="cb"><div class="cbi">
+        <div class="sb"><div class="il">Syntax</div><div class="code">=DAY(date)    → day number  |  =MONTH(date) → month number
+=YEAR(date)   → year number
+=DAY(A1)+MONTH(A1)/10  → e.g. 2.3 = 2nd March (SEO export format)</div></div>
+        <div><div class="il"><span class="en-t">What it does</span><span class="de-t">Was es macht</span></div><div class="it"><span class="en-t">Extracts day, month, or year as a number. Useful for grouping and custom date formats.</span><span class="de-t">Extrahiert Tag, Monat oder Jahr als Zahl. Nützlich für Gruppierungen und benutzerdefinierte Datumsformate.</span></div></div>
+      </div></div>
+    </div>
+  </div>
+</div>
+
+<!-- LOGICAL -->
+<div class="sec" id="sec-logical">
+  <div class="sh"><h2 class="st"><span class="en-t">Logical Formulas</span><span class="de-t">Logische Formeln</span></h2><span class="sc">4 formulas</span></div>
+  <div class="grid">
+    <div class="card clo" data-kw="if ifs wenn logical bedingung" onclick="tog(this)">
+      <div class="ch"><div class="chl"><div class="fn">IF / IFS <span class="fb">Logical</span></div><div class="ft"><span class="en-t">Return values based on a condition</span><span class="de-t">Werte basierend auf Bedingung zurückgeben</span></div></div><span class="ti">+</span></div>
+      <div class="cb"><div class="cbi">
+        <div class="sb"><div class="il">Syntax</div><div class="code">=IF(condition, value_if_true, value_if_false)
+=IF(A1>100, "High", "Low")
+=IFS(A1>100,"High", A1>50,"Medium", TRUE,"Low")</div></div>
+        <div><div class="il"><span class="en-t">What it does</span><span class="de-t">Was es macht</span></div><div class="it"><span class="en-t">Tests a condition. IFS handles multiple conditions cleanly without nesting.</span><span class="de-t">Prüft eine Bedingung. WENNS behandelt mehrere Bedingungen übersichtlich.</span></div></div>
+        <div><div class="il">Pro tip</div><div class="it"><span class="en-t">Avoid deeply nested IFs — use IFS or SWITCH instead.</span><span class="de-t">Tief verschachtelte WENNs vermeiden — WENNS oder WECHSELN verwenden.</span></div></div>
+      </div>
+      <div class="ix"><div class="ixh">// Try it — IF</div><div class="ixb">
+        <div class="irow"><div class="ig"><label>Value</label><input id="iv" type="number" value="75"></div><div class="ig"><label>Threshold</label><input id="it2" type="number" value="50"></div><div class="ig"><label>If true</label><input id="iy" value="Pass"></div><div class="ig"><label>If false</label><input id="in2" value="Fail"></div><button class="btn" onclick="event.stopPropagation();cIf()">Test</button></div>
+        <div class="res" id="ir"><div class="rl">Result</div><div class="rv" id="irv"></div><div class="rf" id="irf"></div></div>
+      </div></div></div>
+    </div>
+    <div class="card clo" data-kw="and or not logical und oder" onclick="tog(this)">
+      <div class="ch"><div class="chl"><div class="fn">AND / OR / NOT <span class="fb">Logical</span></div><div class="ft"><span class="en-t">Test multiple conditions at once</span><span class="de-t">Mehrere Bedingungen gleichzeitig testen</span></div></div><span class="ti">+</span></div>
+      <div class="cb"><div class="cbi">
+        <div class="sb"><div class="il">Syntax</div><div class="code">=AND(cond1, cond2)  → TRUE only if ALL are true
+=OR(cond1, cond2)   → TRUE if ANY is true
+=NOT(condition)     → reverses TRUE/FALSE
+
+=IF(AND(A1>0, B1>0), "Both positive", "No")</div></div>
+        <div><div class="il"><span class="en-t">What it does</span><span class="de-t">Was es macht</span></div><div class="it"><span class="en-t">Almost always used inside IF. AND = all must match. OR = at least one must match.</span><span class="de-t">Fast immer in WENN verwendet. UND = alle müssen passen. ODER = mindestens eine muss passen.</span></div></div>
+      </div></div>
+    </div>
+    <div class="card clo" data-kw="iferror ifna error handle fehler wennfehler" onclick="tog(this)">
+      <div class="ch"><div class="chl"><div class="fn">IFERROR / IFNA <span class="fb">Logical</span></div><div class="ft"><span class="en-t">Handle errors gracefully</span><span class="de-t">Fehler elegant behandeln</span></div></div><span class="ti">+</span></div>
+      <div class="cb"><div class="cbi">
+        <div class="sb"><div class="il">Syntax</div><div class="code">=IFERROR(formula, value_if_error)
+=IFERROR(VLOOKUP(A1,B:C,2,0), "Not found")
+=IFERROR(A1/B1, 0)      → return 0 if division by zero
+=IFNA(formula, "")      → only catches #N/A errors</div></div>
+        <div><div class="il"><span class="en-t">What it does</span><span class="de-t">Was es macht</span></div><div class="it"><span class="en-t">Wraps any formula and returns a friendly value instead of an error. Essential for clean spreadsheets.</span><span class="de-t">Umhüllt jede Formel und gibt statt eines Fehlers einen freundlichen Wert zurück.</span></div></div>
+        <div><div class="il">IFNA vs IFERROR</div><div class="it"><span class="en-t">Use IFNA for lookups — only catches "not found", so real errors like #REF! still surface.</span><span class="de-t">WENNNA für Lookups — fängt nur "nicht gefunden" ab, echte Fehler bleiben sichtbar.</span></div></div>
+      </div></div>
+    </div>
+  </div>
+</div>
+
+<!-- STATISTICAL -->
+<div class="sec" id="sec-statistical">
+  <div class="sh"><h2 class="st"><span class="en-t">Statistical Formulas</span><span class="de-t">Statistik-Formeln</span></h2><span class="sc">5 formulas</span></div>
+  <div class="grid">
+    <div class="card cs" data-kw="average mittelwert mean statistical" onclick="tog(this)">
+      <div class="ch"><div class="chl"><div class="fn">AVERAGE <span class="fb">Statistical</span></div><div class="ft"><span class="en-t">Calculate the mean of a range</span><span class="de-t">Mittelwert berechnen</span></div></div><span class="ti">+</span></div>
+      <div class="cb"><div class="cbi">
+        <div class="sb"><div class="il">Syntax</div><div class="code">=AVERAGE(range)
+=AVERAGEIF(A:A, ">0", B:B)
+=AVERAGEIFS(B:B, A:A, "X", C:C, 1)</div></div>
+        <div><div class="il"><span class="en-t">What it does</span><span class="de-t">Was es macht</span></div><div class="it"><span class="en-t">Returns the arithmetic mean. Empty cells ignored — not counted as zero.</span><span class="de-t">Gibt das arithmetische Mittel zurück. Leere Zellen werden ignoriert.</span></div></div>
+        <div><div class="il">Related</div><div class="it"><b>MEDIAN</b> — <span class="en-t">middle value (better for skewed data)</span><span class="de-t">Median (besser für schiefe Daten)</span><br><b>MODE</b> — <span class="en-t">most frequent value</span><span class="de-t">häufigster Wert</span></div></div>
+      </div></div>
+    </div>
+    <div class="card cs" data-kw="count counta countif countifs zaehlen zahlenwenn" onclick="tog(this)">
+      <div class="ch"><div class="chl"><div class="fn">COUNT / COUNTA / COUNTIF <span class="fb">Statistical</span></div><div class="ft"><span class="en-t">Count cells with or without conditions</span><span class="de-t">Zellen mit oder ohne Bedingungen zählen</span></div></div><span class="ti">+</span></div>
+      <div class="cb"><div class="cbi">
+        <div class="sb"><div class="il">Syntax</div><div class="code">=COUNT(range)           → numeric cells only
+=COUNTA(range)          → any non-empty cells
+=COUNTIF(A:A, "Apple")  → exact match
+=COUNTIF(A:A, "*apple*") → contains "apple"
+=COUNTIFS(A:A,"X", B:B,">5")</div></div>
+        <div><div class="il"><span class="en-t">What it does</span><span class="de-t">Was es macht</span></div><div class="it"><span class="en-t">COUNT = numbers only. COUNTA = anything non-empty. COUNTIF/COUNTIFS add filter conditions.</span><span class="de-t">ANZAHL = nur Zahlen. ANZAHL2 = alles Nicht-Leere. ZÄHLENWENN/ZÄHLENWENNS mit Filterbedingungen.</span></div></div>
+        <div><div class="il">Pro tip</div><div class="it"><code>=COUNTIF(A:A,A1)>1</code> — <span class="en-t">in conditional formatting highlights duplicates instantly</span><span class="de-t">in bedingter Formatierung hebt Duplikate sofort hervor</span></div></div>
+      </div></div>
+    </div>
+    <div class="card cs" data-kw="max min large small maximum minimum" onclick="tog(this)">
+      <div class="ch"><div class="chl"><div class="fn">MAX / MIN <span class="fb">Statistical</span></div><div class="ft"><span class="en-t">Largest or smallest value</span><span class="de-t">Größter oder kleinster Wert</span></div></div><span class="ti">+</span></div>
+      <div class="cb"><div class="cbi">
+        <div class="sb"><div class="il">Syntax</div><div class="code">=MAX(range)  |  =MIN(range)
+=LARGE(range, 2)   → 2nd largest / 2.-größter Wert
+=SMALL(range, 2)   → 2nd smallest
+=MAXIFS(max_range, criteria_range, criteria)</div></div>
+        <div><div class="il"><span class="en-t">What it does</span><span class="de-t">Was es macht</span></div><div class="it"><span class="en-t">MAX/MIN return the highest/lowest value. LARGE/SMALL for 2nd, 3rd, Nth.</span><span class="de-t">MAX/MIN geben den höchsten/niedrigsten Wert zurück. KGRÖSSTE/KKLEINSTE für den 2., 3., n-ten.</span></div></div>
+      </div></div>
+    </div>
+    <div class="card cs" data-kw="unique distinct eindeutig values werte" onclick="tog(this)">
+      <div class="ch"><div class="chl"><div class="fn">UNIQUE <span class="fb">Statistical</span></div><div class="ft"><span class="en-t">Extract a list of unique values</span><span class="de-t">Eindeutige Werte extrahieren</span></div></div><span class="ti">+</span></div>
+      <div class="cb"><div class="cbi">
+        <div class="sb"><div class="il">Syntax</div><div class="code">=UNIQUE(A1:A100)               → unique list (spills automatically)
+=UNIQUE(A1:A100, , TRUE)       → values appearing exactly once
+=COUNTA(UNIQUE(A1:A100))       → count of unique values</div></div>
+        <div><div class="il"><span class="en-t">What it does</span><span class="de-t">Was es macht</span></div><div class="it"><span class="en-t">Returns unique values from a range. Result spills across cells. Excel 365+ only.</span><span class="de-t">Gibt eindeutige Werte zurück. Ergebnis läuft automatisch über. Nur Excel 365+.</span></div></div>
+        <div><div class="il">SEO use</div><div class="it"><span class="en-t">Quickly deduplicate URL or keyword lists from exports.</span><span class="de-t">URL- oder Keyword-Listen aus Exporten schnell deduplizieren.</span></div></div>
+      </div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SEO -->
+<div class="sec" id="sec-seo">
+  <div class="sh"><h2 class="st">SEO Formulas</h2><span class="sc">8 workflows</span></div>
+  <div class="grid">
+    <div class="card cseo" data-kw="len meta title description length seo" onclick="tog(this)">
+      <div class="ch"><div class="chl"><div class="fn">Meta Length Checker <span class="fb">SEO</span></div><div class="ft"><span class="en-t">Validate title and meta description lengths</span><span class="de-t">Länge von Titel und Meta-Beschreibung prüfen</span></div></div><span class="ti">+</span></div>
+      <div class="cb"><div class="cbi">
+        <div class="sb"><div class="il">Formula</div><div class="code">=IF(LEN(A1)>60,"❌ Too long",IF(LEN(A1)&lt;30,"⚠️ Too short","✅ OK"))
+→ for page titles (ideal: 30–60 chars)
+
+=IF(LEN(A1)>160,"❌ Too long",IF(LEN(A1)&lt;70,"⚠️ Too short","✅ OK"))
+→ for meta descriptions (ideal: 70–160 chars)
+
+=LEN(A1)&" chars"  → show exact count in column B</div></div>
+        <div><div class="il"><span class="en-t">When to use</span><span class="de-t">Wann verwenden</span></div><div class="it"><span class="en-t">After any content export or crawl. Add conditional formatting to auto-color cells red/green.</span><span class="de-t">Nach jedem Content-Export oder Crawl. Bedingte Formatierung für automatische Rot/Grün-Färbung hinzufügen.</span></div></div>
+        <div><div class="il">Pro tip</div><div class="it"><span class="en-t">Wrap in TRIM: <code>=IF(LEN(TRIM(A1))>60,...</code> — avoids false flags from invisible spaces in exports.</span><span class="de-t">Mit GLÄTTEN umhüllen: verhindert Fehlalarme durch unsichtbare Leerzeichen in Exporten.</span></div></div>
+      </div></div>
+    </div>
+    <div class="card cseo" data-kw="countif duplicate url keyword seo" onclick="tog(this)">
+      <div class="ch"><div class="chl"><div class="fn">Duplicate URL Detector <span class="fb">SEO</span></div><div class="ft"><span class="en-t">Find duplicate URLs or keywords in a list</span><span class="de-t">Doppelte URLs oder Keywords finden</span></div></div><span class="ti">+</span></div>
+      <div class="cb"><div class="cbi">
+        <div class="sb"><div class="il">Formula</div><div class="code">=IF(COUNTIF(A:A,A1)>1, "⚠️ Duplicate", "✅ Unique")
+=COUNTIF(A:A, A1)   → how many times this URL appears
+=COUNTIFS(A:A,A1,B:B,B1)  → duplicate across 2 columns (URL + language)
+
+→ Wrap in LOWER() to ignore case: =COUNTIF(A:A,LOWER(A1))>1</div></div>
+        <div><div class="il"><span class="en-t">When to use</span><span class="de-t">Wann verwenden</span></div><div class="it"><span class="en-t">After merging keyword lists from multiple tools, or checking canonical issues in a crawl export.</span><span class="de-t">Nach dem Zusammenführen von Keyword-Listen aus mehreren Tools oder bei Canonical-Problemen im Crawl-Export.</span></div></div>
+      </div></div>
+    </div>
+    <div class="card cseo" data-kw="xlookup iferror keyword match rank seo" onclick="tog(this)">
+      <div class="ch"><div class="chl"><div class="fn">Keyword Rank Matcher <span class="fb">SEO</span></div><div class="ft"><span class="en-t">Match keywords between exports and pull ranking data</span><span class="de-t">Keywords zwischen Exporten abgleichen</span></div></div><span class="ti">+</span></div>
+      <div class="cb"><div class="cbi">
+        <div class="sb"><div class="il">Formula</div><div class="code">=XLOOKUP(A2, Sheet2!A:A, Sheet2!B:B, "Not in export")
+→ match keyword from current export to ranking data
+
+=IFERROR(VLOOKUP(A2, Sheet2!A:C, 3, 0), "Not tracked")
+→ fallback for older Excel without XLOOKUP
+
+Delta column: =B2-C2  → this week minus last week position</div></div>
+        <div><div class="il"><span class="en-t">When to use</span><span class="de-t">Wann verwenden</span></div><div class="it"><span class="en-t">Comparing GSC exports week over week. Or matching SISTRIX keywords to your tracking sheet.</span><span class="de-t">GSC-Exporte Woche für Woche vergleichen. Oder SISTRIX-Keywords mit dem Tracking-Sheet abgleichen.</span></div></div>
+        <div><div class="il">Pro tip</div><div class="it"><span class="en-t">Add conditional formatting on the delta column: green for positive (improved rank), red for negative (dropped).</span><span class="de-t">Bedingte Formatierung auf Delta-Spalte: grün für positiv (Rang verbessert), rot für negativ (gefallen).</span></div></div>
+      </div></div>
+    </div>
+    <div class="card cseo" data-kw="trim substitute url clean seo format" onclick="tog(this)">
+      <div class="ch"><div class="chl"><div class="fn">URL Cleaner / Normalizer <span class="fb">SEO</span></div><div class="ft"><span class="en-t">Clean and normalize URLs from exports</span><span class="de-t">URLs aus Exporten bereinigen</span></div></div><span class="ti">+</span></div>
+      <div class="cb"><div class="cbi">
+        <div class="sb"><div class="il">Formula</div><div class="code">=TRIM(LOWER(A1))
+→ lowercase + remove extra spaces
+
+=SUBSTITUTE(SUBSTITUTE(A1,"https://",""),"http://","")
+→ strip protocol
+
+=LEFT(A1,FIND("?",A1&"?")-1)
+→ remove query string parameters (?utm_source=...) 
+
+=SUBSTITUTE(TRIM(LOWER(A1))," ","-")
+→ create URL slug from keyword</div></div>
+        <div><div class="il"><span class="en-t">When to use</span><span class="de-t">Wann verwenden</span></div><div class="it"><span class="en-t">Before merging exports from different tools — GSC, Screaming Frog, and SISTRIX often format URLs differently. Always normalize before XLOOKUP to avoid false "not found".</span><span class="de-t">Vor dem Zusammenführen von Exporten — GSC, Screaming Frog und SISTRIX formatieren URLs oft unterschiedlich. Immer vor XLOOKUP normalisieren.</span></div></div>
+      </div></div>
+    </div>
+    <div class="card cseo" data-kw="unique countifs keyword deduplicate seo" onclick="tog(this)">
+      <div class="ch"><div class="chl"><div class="fn">Keyword Deduplication <span class="fb">SEO</span></div><div class="ft"><span class="en-t">Remove duplicates and aggregate keyword data</span><span class="de-t">Duplikate entfernen und Keyword-Daten aggregieren</span></div></div><span class="ti">+</span></div>
+      <div class="cb"><div class="cbi">
+        <div class="sb"><div class="il">Formula</div><div class="code">=UNIQUE(A1:A1000)                → deduplicated keyword list
+=COUNTA(UNIQUE(A1:A1000))        → count of unique keywords
+=COUNTIFS(A:A,A2,B:B,"DE")      → keyword count for specific market
+=SUMIF(A:A,A2,C:C)              → total volume across all keyword variants</div></div>
+        <div><div class="il"><span class="en-t">When to use</span><span class="de-t">Wann verwenden</span></div><div class="it"><span class="en-t">After merging keyword research from multiple tools. UNIQUE gives a clean list; SUMIF aggregates total volume.</span><span class="de-t">Nach dem Zusammenführen von Keyword-Recherchen. EINDEUTIG gibt eine saubere Liste; SUMMEWENN aggregiert Gesamtvolumen.</span></div></div>
+      </div></div>
+    </div>
+    <div class="card cseo" data-kw="day month german date export fix seo datum" onclick="tog(this)">
+      <div class="ch"><div class="chl"><div class="fn">German Date Export Fix <span class="fb">SEO</span></div><div class="ft"><span class="en-t">Convert "02. Mär" → 2.3 (and all German month formats)</span><span class="de-t">"02. Mär" → 2,3 (alle deutschen Monatsformate)</span></div></div><span class="ti">+</span></div>
+      <div class="cb"><div class="cbi">
+        <div class="sb"><div class="il"><span class="en-t">The problem</span><span class="de-t">Das Problem</span></div><div class="code">Export gives: 02. Mär  → need: 2.3
+             01. Mai  → need: 1.5
+             02. Jan. → need: 2.1   (note trailing dot variants)</div></div>
+        <div class="sb"><div class="il"><span class="en-t">Step 1 — helper column: convert German months to English</span><span class="de-t">Schritt 1 — Hilfsspalte: Deutsche Monate ins Englische</span></div><div class="code">=SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(
+ SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(
+ SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(
+ SUBSTITUTE(TRIM(A1),"Jan.","Jan"),"Feb.","Feb"),
+ "Mär.","Mar"),"Mär","Mar"),"Apr.","Apr"),
+ "Mai.","May"),"Mai","May"),"Jun.","Jun"),
+ "Jul.","Jul"),"Aug.","Aug"),"Sep.","Sep"),
+ "Okt.","Oct"),"Okt","Oct"),"Nov.","Nov"),
+ "Dez.","Dec"),"Dez","Dec")</div></div>
+        <div class="sb"><div class="il"><span class="en-t">Step 2 — extract day.month/10 (put helper result in B1)</span><span class="de-t">Schritt 2 — Tag.Monat/10 extrahieren</span></div><div class="code">=DAY(DATEVALUE(B1&" 2024"))+MONTH(DATEVALUE(B1&" 2024"))/10</div></div>
+        <div><div class="il"><span class="en-t">Why it works</span><span class="de-t">Warum es funktioniert</span></div><div class="it"><span class="en-t">SUBSTITUTE chain converts German abbreviations to English so DATEVALUE can parse it. Adding " 2024" provides a valid year. DAY()+MONTH()/10 creates the decimal format.</span><span class="de-t">ERSETZEN-Kette konvertiert deutsche Abkürzungen, damit DATWERT parsen kann. " 2024" gibt ein gültiges Jahr. TAG()+MONAT()/10 erstellt das Dezimalformat.</span></div></div>
+        <div><div class="il">⚠️ Oct/Nov/Dec</div><div class="it"><span class="en-t">Oct(10), Nov(11), Dec(12) give 2-digit month decimals (e.g. 2.10). Use the 2-step approach and format as text if needed.</span><span class="de-t">Okt(10), Nov(11), Dez(12) ergeben 2-stellige Monatsdezimalzahlen. Zwei-Schritt-Ansatz verwenden.</span></div></div>
+      </div></div>
+    </div>
+    <div class="card cseo" data-kw="indirect offset dynamic dashboard seo reference" onclick="tog(this)">
+      <div class="ch"><div class="chl"><div class="fn">Dynamic SEO Dashboard <span class="fb">SEO</span></div><div class="ft"><span class="en-t">Build reports that auto-update from raw data sheets</span><span class="de-t">Berichte, die sich automatisch aus Rohdaten aktualisieren</span></div></div><span class="ti">+</span></div>
+      <div class="cb"><div class="cbi">
+        <div class="sb"><div class="il">Formula</div><div class="code">=INDIRECT("'"&A1&"'!B2")
+→ if A1 = sheet name (e.g. "Week_01"), pulls B2 from that sheet
+
+=OFFSET(Data!A1, MATCH(TODAY(),Data!A:A,0)-1, 1)
+→ find today's row in data and return adjacent value
+
+=SUM(OFFSET(A1,0,0,COUNTA(A:A),1))
+→ auto-expanding SUM that grows as new data is added</div></div>
+        <div><div class="il"><span class="en-t">When to use</span><span class="de-t">Wann verwenden</span></div><div class="it"><span class="en-t">When weekly crawl/ranking data lives on separate sheets and you want one summary sheet that always shows current numbers without manual updates.</span><span class="de-t">Wenn wöchentliche Crawl-/Ranking-Daten auf separaten Blättern liegen und ein Übersichtsblatt ohne manuelle Aktualisierungen gewünscht wird.</span></div></div>
+      </div></div>
+    </div>
+    <div class="card cseo" data-kw="ranking change tracker countif delta seo" onclick="tog(this)">
+      <div class="ch"><div class="chl"><div class="fn">Ranking Change Tracker <span class="fb">SEO</span></div><div class="ft"><span class="en-t">Track keyword position changes between two periods</span><span class="de-t">Keyword-Positionsänderungen verfolgen</span></div></div><span class="ti">+</span></div>
+      <div class="cb"><div class="cbi">
+        <div class="sb"><div class="il">Formula</div><div class="code">=B2-C2
+→ delta (positive = improved, negative = dropped)
+
+=IF(B2-C2>0,"↑ Improved",IF(B2-C2&lt;0,"↓ Dropped","→ Stable"))
+=COUNTIF(D:D,"↑ Improved")   → count of improved keywords
+=AVERAGEIF(D:D,"↑ Improved",B:B)  → avg new position of improved kws</div></div>
+        <div><div class="il"><span class="en-t">When to use</span><span class="de-t">Wann verwenden</span></div><div class="it"><span class="en-t">Weekly or monthly ranking reports. Add green/red conditional formatting on the delta column for instant visual scanning.</span><span class="de-t">Wöchentliche oder monatliche Ranking-Berichte. Grün/Rot bedingte Formatierung auf der Delta-Spalte für schnellen Überblick.</span></div></div>
+      </div></div>
+    </div>
+  </div>
+</div>
+
+<!-- TOOLS -->
+<div class="sec" id="sec-tools">
+  <div class="sh"><h2 class="st">Tools &amp; Tips</h2><span class="sc"><span class="en-t">Power features with animated guides</span><span class="de-t">Power-Features mit animierten Anleitungen</span></span></div>
+  <div class="tg">
+
+    <div class="tip cto">
+      <div class="tph" onclick="togTip(this.parentElement)"><div class="tpi"><div class="tic">🏷️</div><div class="tit">Named Ranges</div><div class="tid"><span class="en-t">Give cells a name — use it in formulas instead of coordinates.</span><span class="de-t">Zellen einen Namen geben — in Formeln statt Koordinaten verwenden.</span></div></div><span class="ti" style="margin-top:0">+</span></div>
+      <div class="tpb"><div class="dw">
+        <div class="de"><div class="dtb"><span>📊 Excel</span></div>
+          <div class="dr"><div class="dc hd"></div><div class="dc hd">A</div><div class="dc hd">B</div></div>
+          <div class="dr"><div class="dc hd">1</div><div class="dc">Month</div><div class="dc">Revenue</div></div>
+          <div class="dr"><div class="dc hd">2</div><div class="dc">Jan</div><div class="dc" id="nb2">12500</div></div>
+          <div class="dr"><div class="dc hd">3</div><div class="dc">Feb</div><div class="dc">14200</div></div>
+          <div class="dr"><div class="dc hd">5</div><div class="dc">Total</div><div class="dc" id="nb5">=SUM(B2:B4)</div></div>
+        </div>
+        <div class="dsteps" id="nrsteps">
+          <div class="ds on"><span class="dn">1</span><span class="dt"><span class="en-t">Select cells B2:B4 (revenue data)</span><span class="de-t">Zellen B2:B4 auswählen (Umsatzdaten)</span></span></div>
+          <div class="ds"><span class="dn">2</span><span class="dt"><span class="en-t"><b>Formulas</b> tab → <b>Define Name</b></span><span class="de-t">Reiter <b>Formeln</b> → <b>Namen definieren</b></span></span></div>
+          <div class="ds"><span class="dn">3</span><span class="dt"><span class="en-t">Type <code>Revenue</code> as the name → OK</span><span class="de-t"><code>Umsatz</code> als Namen eingeben → OK</span></span></div>
+          <div class="ds"><span class="dn">4</span><span class="dt"><span class="en-t">Now use <code>=SUM(Revenue)</code> instead of <code>=SUM(B2:B4)</code>!</span><span class="de-t">Jetzt <code>=SUMME(Umsatz)</code> statt <code>=SUMME(B2:B4)</code>!</span></span></div>
+        </div>
+        <button class="pb" onclick="playNR()">▶ <span class="en-t">Play demo</span><span class="de-t">Demo abspielen</span></button>
+      </div></div>
+    </div>
+
+    <div class="tip cto">
+      <div class="tph" onclick="togTip(this.parentElement)"><div class="tpi"><div class="tic">📋</div><div class="tit">Text to Columns</div><div class="tid"><span class="en-t">Split one column into multiple by a delimiter — no formula needed.</span><span class="de-t">Eine Spalte anhand eines Trennzeichens aufteilen — keine Formel nötig.</span></div></div><span class="ti" style="margin-top:0">+</span></div>
+      <div class="tpb"><div class="dw">
+        <div class="de"><div class="dtb"><span>📊 Excel</span></div>
+          <div class="dr"><div class="dc hd"></div><div class="dc hd">A</div><div class="dc hd">B</div><div class="dc hd">C</div></div>
+          <div class="dr"><div class="dc hd">1</div><div class="dc" id="tca1">John,Smith,Sales</div><div class="dc" id="tcb1"></div><div class="dc" id="tcc1"></div></div>
+          <div class="dr"><div class="dc hd">2</div><div class="dc">Anna,Jones,Mktg</div><div class="dc" id="tcb2"></div><div class="dc" id="tcc2"></div></div>
+        </div>
+        <div class="dsteps">
+          <div class="ds on" id="tcs1"><span class="dn">1</span><span class="dt"><span class="en-t">Select column A with your data</span><span class="de-t">Spalte A mit den Daten auswählen</span></span></div>
+          <div class="ds" id="tcs2"><span class="dn">2</span><span class="dt"><span class="en-t"><b>Data</b> tab → <b>Text to Columns</b></span><span class="de-t">Reiter <b>Daten</b> → <b>Text in Spalten</b></span></span></div>
+          <div class="ds" id="tcs3"><span class="dn">3</span><span class="dt"><span class="en-t">Choose <b>Delimited</b> → Next → check <b>Comma</b> → Finish</span><span class="de-t"><b>Getrennt</b> → Weiter → <b>Komma</b> → Fertig stellen</span></span></div>
+          <div class="ds" id="tcs4"><span class="dn">4</span><span class="dt"><span class="en-t">Data splits into 3 columns automatically ✅</span><span class="de-t">Daten werden automatisch in 3 Spalten aufgeteilt ✅</span></span></div>
+        </div>
+        <button class="pb" onclick="playTC()">▶ <span class="en-t">Play demo</span><span class="de-t">Demo abspielen</span></button>
+      </div></div>
+    </div>
+
+    <div class="tip cto">
+      <div class="tph" onclick="togTip(this.parentElement)"><div class="tpi"><div class="tic">📊</div><div class="tit">Sparklines</div><div class="tid"><span class="en-t">Tiny charts inside a single cell — perfect for SEO dashboards.</span><span class="de-t">Winzige Diagramme in einer Zelle — ideal für SEO-Dashboards.</span></div></div><span class="ti" style="margin-top:0">+</span></div>
+      <div class="tpb"><div class="dw">
+        <div class="de"><div class="dtb"><span>📊 Excel</span></div>
+          <div class="dr"><div class="dc hd"></div><div class="dc hd">A</div><div class="dc hd">B</div><div class="dc hd">C</div><div class="dc hd">D</div><div class="dc hd">E</div></div>
+          <div class="dr"><div class="dc hd">1</div><div class="dc">KW 1</div><div class="dc">42</div><div class="dc">38</div><div class="dc">45</div><div class="dc" id="spe1" style="font-size:18px"></div></div>
+          <div class="dr"><div class="dc hd">2</div><div class="dc">KW 2</div><div class="dc">15</div><div class="dc">22</div><div class="dc">19</div><div class="dc" id="spe2" style="font-size:18px"></div></div>
+        </div>
+        <div class="dsteps">
+          <div class="ds on" id="sps1"><span class="dn">1</span><span class="dt"><span class="en-t">Select cell E1 (where sparkline will appear)</span><span class="de-t">Zelle E1 auswählen (wo das Sparkline erscheint)</span></span></div>
+          <div class="ds" id="sps2"><span class="dn">2</span><span class="dt"><span class="en-t"><b>Insert</b> tab → <b>Sparklines</b> → <b>Line</b></span><span class="de-t">Reiter <b>Einfügen</b> → <b>Sparklines</b> → <b>Linie</b></span></span></div>
+          <div class="ds" id="sps3"><span class="dn">3</span><span class="dt"><span class="en-t">Select data range B1:D1 → OK</span><span class="de-t">Datenbereich B1:D1 auswählen → OK</span></span></div>
+          <div class="ds" id="sps4"><span class="dn">4</span><span class="dt"><span class="en-t">Tiny trend line appears in E1! Drag down to apply to more rows.</span><span class="de-t">Trendlinie erscheint in E1! Nach unten ziehen für weitere Zeilen.</span></span></div>
+        </div>
+        <button class="pb" onclick="playSP()">▶ <span class="en-t">Play demo</span><span class="de-t">Demo abspielen</span></button>
+      </div></div>
+    </div>
+
+    <div class="tip cto">
+      <div class="tph" onclick="togTip(this.parentElement)"><div class="tpi"><div class="tic">✅</div><div class="tit">Data Validation</div><div class="tid"><span class="en-t">Create dropdowns and restrict cell input. No more typos in shared sheets.</span><span class="de-t">Dropdowns erstellen und Eingaben einschränken. Keine Tippfehler mehr.</span></div></div><span class="ti" style="margin-top:0">+</span></div>
+      <div class="tpb"><div class="dw">
+        <div class="de"><div class="dtb"><span>📊 Excel</span></div>
+          <div class="dr"><div class="dc hd"></div><div class="dc hd">A</div><div class="dc hd">B</div></div>
+          <div class="dr"><div class="dc hd">1</div><div class="dc">Status</div><div class="dc">▼ Draft</div></div>
+          <div class="dr"><div class="dc hd">2</div><div class="dc">Priority</div><div class="dc">▼ High</div></div>
+        </div>
+        <div class="dsteps">
+          <div class="ds on"><span class="dn">1</span><span class="dt"><span class="en-t">Select the cells where you want the dropdown</span><span class="de-t">Zellen für das Dropdown auswählen</span></span></div>
+          <div class="ds"><span class="dn">2</span><span class="dt"><span class="en-t"><b>Data</b> → <b>Data Validation</b> → <b>Data Validation...</b></span><span class="de-t"><b>Daten</b> → <b>Datenüberprüfung</b></span></span></div>
+          <div class="ds"><span class="dn">3</span><span class="dt"><span class="en-t"><b>Allow: List</b> → Source: <code>Draft,Review,Published,Archived</code></span><span class="de-t"><b>Zulassen: Liste</b> → Quelle: <code>Entwurf,Prüfung,Veröffentlicht,Archiviert</code></span></span></div>
+          <div class="ds"><span class="dn">4</span><span class="dt"><span class="en-t">Click OK — dropdown appears. Only valid values can be entered ✅</span><span class="de-t">OK → Dropdown erscheint. Nur gültige Werte können eingegeben werden ✅</span></span></div>
+        </div>
+      </div></div>
+    </div>
+
+    <div class="tip cto">
+      <div class="tph" onclick="togTip(this.parentElement)"><div class="tpi"><div class="tic">⚡</div><div class="tit"><span class="en-t">Essential Shortcuts</span><span class="de-t">Wichtige Shortcuts</span></div><div class="tid"><span class="en-t">The shortcuts that save the most time every day in Excel.</span><span class="de-t">Die Shortcuts, die täglich am meisten Zeit sparen.</span></div></div><span class="ti" style="margin-top:0">+</span></div>
+      <div class="tpb"><div style="padding:14px 16px;">
+        <div class="code" style="font-size:12px;line-height:2">Alt + =          → Auto-SUM selected range
+Ctrl + ;         → Insert static date (frozen)
+Ctrl + T         → Create Table from range
+Ctrl + D         → Fill down
+F4               → Toggle $absolute reference
+Ctrl + Shift + L → Toggle AutoFilter
+Ctrl + `         → Show/hide all formulas
+F2               → Edit cell (cursor in formula)
+Ctrl + F1        → Hide/show ribbon</div>
+      </div></div>
+    </div>
+
+    <div class="tip cto">
+      <div class="tph" onclick="togTip(this.parentElement)"><div class="tpi"><div class="tic">🔒</div><div class="tit"><span class="en-t">Absolute References ($)</span><span class="de-t">Absolute Bezüge ($)</span></div><div class="tid"><span class="en-t">Lock rows or columns when copying formulas. Press F4 to cycle.</span><span class="de-t">Zeilen oder Spalten beim Kopieren sperren. F4 zum Wechseln.</span></div></div><span class="ti" style="margin-top:0">+</span></div>
+      <div class="tpb"><div style="padding:14px 16px;">
+        <div class="code" style="font-size:12px;line-height:2">A1    → relative — changes when copied
+$A$1  → absolute — stays fixed always
+$A1   → column locked, row moves
+A$1   → row locked, column moves
+
+Press F4 to cycle through all 4 options.
+Rule: lock your lookup table, leave input cell relative.</div>
+      </div></div>
+    </div>
+
+    <div class="tip cto">
+      <div class="tph" onclick="togTip(this.parentElement)"><div class="tpi"><div class="tic">🎨</div><div class="tit"><span class="en-t">Conditional Formatting</span><span class="de-t">Bedingte Formatierung</span></div><div class="tid"><span class="en-t">Auto-color cells based on values. Essential for ranking dashboards.</span><span class="de-t">Zellen automatisch einfärben. Unverzichtbar für Ranking-Dashboards.</span></div></div><span class="ti" style="margin-top:0">+</span></div>
+      <div class="tpb"><div class="dw">
+        <div class="de"><div class="dtb"><span>📊 Excel — Ranking Dashboard</span></div>
+          <div class="dr"><div class="dc hd"></div><div class="dc hd" style="min-width:140px">A (Keyword)</div><div class="dc hd">B (Pos.)</div></div>
+          <div class="dr"><div class="dc hd">1</div><div class="dc" style="min-width:140px">buy running shoes</div><div class="dc" style="background:#c8e6c9;color:#1b5e20;font-weight:600">2</div></div>
+          <div class="dr"><div class="dc hd">2</div><div class="dc" style="min-width:140px">best running shoes</div><div class="dc" style="background:#fff9c4;color:#f57f17;font-weight:600">8</div></div>
+          <div class="dr"><div class="dc hd">3</div><div class="dc" style="min-width:140px">running shoes review</div><div class="dc" style="background:#ffcdd2;color:#b71c1c;font-weight:600">24</div></div>
+        </div>
+        <div class="dsteps">
+          <div class="ds on"><span class="dn">1</span><span class="dt"><span class="en-t">Select column B (ranking positions)</span><span class="de-t">Spalte B auswählen (Ranking-Positionen)</span></span></div>
+          <div class="ds"><span class="dn">2</span><span class="dt"><span class="en-t"><b>Home</b> → <b>Conditional Formatting</b> → <b>Color Scales</b></span><span class="de-t"><b>Start</b> → <b>Bedingte Formatierung</b> → <b>Farbskalen</b></span></span></div>
+          <div class="ds"><span class="dn">3</span><span class="dt"><span class="en-t">Choose Green-Yellow-Red (low numbers = good rankings)</span><span class="de-t">Grün-Gelb-Rot wählen (niedrige Zahlen = gute Rankings)</span></span></div>
+          <div class="ds"><span class="dn">4</span><span class="dt"><span class="en-t">Positions auto-colored — instantly scannable ✅</span><span class="de-t">Positionen automatisch eingefärbt — sofort überschaubar ✅</span></span></div>
+        </div>
+      </div></div>
+    </div>
+
+  </div>
+</div>
+
+</main>
+<script>
+// Search index
+const idx=[];
+document.querySelectorAll('.card[data-kw]').forEach(c=>{
+  const sec=c.closest('.sec').id.replace('sec-','');
+  idx.push({el:c,kw:c.dataset.kw,name:c.querySelector('.fn').textContent.trim(),sec});
+});
+function doSearch(q){
+  const r=document.getElementById('sres');
+  if(!q.trim()){r.innerHTML='';r.classList.remove('on');return;}
+  const m=idx.filter(x=>x.kw.toLowerCase().includes(q.toLowerCase()));
+  r.innerHTML=m.length?m.slice(0,8).map(x=>`<div class="sri" onclick="jump('${x.sec}','${x.kw}')"><div class="srn">${x.name}</div><div class="src">${x.sec.toUpperCase()}</div></div>`).join(''):'<div class="se">No results</div>';
+  r.classList.add('on');
+}
+function jump(sec,kw){
+  document.getElementById('srch').value='';document.getElementById('sres').classList.remove('on');
+  document.querySelectorAll('.nb').forEach(b=>{if(b.getAttribute('onclick')&&b.getAttribute('onclick').includes("'"+sec+"'"))b.click();});
+  setTimeout(()=>{const c=idx.find(x=>x.kw===kw);if(c){c.el.scrollIntoView({behavior:'smooth',block:'center'});c.el.classList.add('op');}},100);
+}
+function openS(){if(document.getElementById('srch').value)document.getElementById('sres').classList.add('on');}
+function closeS(){document.getElementById('sres').classList.remove('on');}
+function go(id,btn){document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));document.getElementById('sec-'+id).classList.add('on');btn.classList.add('on');}
+function tog(card){if(event.target.closest('.ix')||['INPUT','BUTTON','SELECT'].includes(event.target.tagName))return;card.classList.toggle('op');}
+function togTip(tip){if(event.target.tagName==='BUTTON')return;tip.classList.toggle('op');}
+function setLang(l){const app=document.getElementById('app');if(l==='de'){app.classList.add('de');}else{app.classList.remove('de');}document.querySelectorAll('.lb').forEach((b,i)=>{if(i===0){l==='en'?b.classList.add('on'):b.classList.remove('on');}if(i===1){l==='de'?b.classList.add('on'):b.classList.remove('on');}});}
+function showR(id,v,f){const b=document.getElementById(id+'r');if(b){b.classList.add('on');document.getElementById(id+'v').textContent=v;const ff=document.getElementById(id+'f');if(ff)ff.textContent=f;}}
+function cSum(){const n=document.getElementById('si').value.split(',').map(s=>parseFloat(s.trim())).filter(n=>!isNaN(n));showR('s',n.reduce((a,b)=>a+b,0),`=SUM(${n.join(', ')})`);}
+function cRound(){const n=parseFloat(document.getElementById('rn').value),d=parseInt(document.getElementById('rd').value);showR('r',Math.round(n*Math.pow(10,d))/Math.pow(10,d),`=ROUND(${n},${d})`);}
+function cConcat(){const a=document.getElementById('ca').value,s=document.getElementById('cs').value,b=document.getElementById('cb2').value;showR('c',`"${a+s+b}"`,`="${a}"&"${s}"&"${b}"`);}
+function cLR(){const t=document.getElementById('lt').value,d=document.getElementById('ld').value,c=parseInt(document.getElementById('lc').value);const r=d==='l'?t.substring(0,c):t.substring(t.length-c);showR('l',`"${r}"`,`=${d==='l'?'LEFT':'RIGHT'}("${t}",${c})`);}
+function cDate(){const s=new Date(document.getElementById('ds').value),e=new Date(document.getElementById('de2').value);if(isNaN(s)||isNaN(e))return;const days=Math.round((e-s)/864e5);showR('d',`${Math.abs(days)} days · ${Math.abs(Math.round(days/30))} months`,`=DATEDIF(start,end,"D") → ${days}`);}
+function cIf(){const v=parseFloat(document.getElementById('iv').value),t=parseFloat(document.getElementById('it2').value),y=document.getElementById('iy').value,n=document.getElementById('in2').value;const b=document.getElementById('ir');b.classList.add('on');document.getElementById('irv').textContent=v>t?y:n;document.getElementById('irf').textContent=`=IF(${v}>${t},"${y}","${n}")`;}
+const today=new Date(),ly=new Date(today);ly.setFullYear(today.getFullYear()-1);
+document.getElementById('de2').value=today.toISOString().split('T')[0];
+document.getElementById('ds').value=ly.toISOString().split('T')[0];
+function animSteps(steps,ms,cb){steps.forEach(s=>s.classList.remove('on'));let i=0;steps[0].classList.add('on');const t=setInterval(()=>{i++;if(i>=steps.length){clearInterval(t);if(cb)cb();return;}steps[i-1].classList.remove('on');steps[i].classList.add('on');},ms);}
+function playNR(){
+  const steps=[...document.getElementById('nrsteps').querySelectorAll('.ds')];
+  const b5=document.getElementById('nb5');
+  b5.textContent='=SUM(B2:B4)';b5.style.color='';
+  animSteps(steps,1400,()=>{b5.textContent='=SUM(Revenue)';b5.classList.add('grn');setTimeout(()=>b5.classList.remove('grn'),2000);});
+}
+function playTC(){
+  const steps=[document.getElementById('tcs1'),document.getElementById('tcs2'),document.getElementById('tcs3'),document.getElementById('tcs4')];
+  const a=document.getElementById('tca1'),b=document.getElementById('tcb1'),c=document.getElementById('tcc1');
+  a.textContent='John,Smith,Sales';b.textContent='';c.textContent='';b.classList.remove('grn');c.classList.remove('grn');
+  animSteps(steps,1400,()=>{a.textContent='John';b.textContent='Smith';c.textContent='Sales';b.classList.add('grn');c.classList.add('grn');setTimeout(()=>{b.classList.remove('grn');c.classList.remove('grn');},2000);});
+}
+function playSP(){
+  const steps=[document.getElementById('sps1'),document.getElementById('sps2'),document.getElementById('sps3'),document.getElementById('sps4')];
+  const e1=document.getElementById('spe1'),e2=document.getElementById('spe2');
+  e1.textContent='';e2.textContent='';
+  animSteps(steps,1400,()=>{e1.textContent='📈';e2.textContent='📉';});
+}
+</script>
+</div></body>
+</html>
