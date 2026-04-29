@@ -756,7 +756,7 @@ function closeS(){document.getElementById('sres').classList.remove('on');}
 function go(id,btn){document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));document.getElementById('sec-'+id).classList.add('on');btn.classList.add('on');}
 function tog(card){if(event.target.closest('.ix')||['INPUT','BUTTON','SELECT'].includes(event.target.tagName))return;card.classList.toggle('op');}
 function togTip(tip){if(event.target.tagName==='BUTTON')return;tip.classList.toggle('op');}
-function setLang(l){const app=document.getElementById('app');if(l==='de'){app.classList.add('de');}else{app.classList.remove('de');}document.querySelectorAll('.lb').forEach((b,i)=>{if(i===0){l==='en'?b.classList.add('on'):b.classList.remove('on');}if(i===1){l==='de'?b.classList.add('on'):b.classList.remove('on');}});}
+function setLang(l){const app=document.getElementById('app');if(l==='de'){app.classList.add('de');}else{app.classList.remove('de');}document.querySelectorAll('.lb').forEach(b=>{const bl=b.getAttribute('onclick').includes("'en'");b.classList.toggle('on',(bl&&l==='en')||(!bl&&l==='de'));});}
 function showR(id,v,f){const b=document.getElementById(id+'r');if(b){b.classList.add('on');document.getElementById(id+'v').textContent=v;const ff=document.getElementById(id+'f');if(ff)ff.textContent=f;}}
 function cSum(){const n=document.getElementById('si').value.split(',').map(s=>parseFloat(s.trim())).filter(n=>!isNaN(n));showR('s',n.reduce((a,b)=>a+b,0),`=SUM(${n.join(', ')})`);}
 function cRound(){const n=parseFloat(document.getElementById('rn').value),d=parseInt(document.getElementById('rd').value);showR('r',Math.round(n*Math.pow(10,d))/Math.pow(10,d),`=ROUND(${n},${d})`);}
